@@ -1,0 +1,43 @@
+package com.example.userhub.ui.view
+
+import android.os.Bundle
+import android.view.View
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.userhub.databinding.ActivityMainBinding
+import com.example.userhub.ui.adapter.LoadingStateAdapter
+import com.example.userhub.ui.adapter.UserAdapter
+import com.example.userhub.ui.viewmodel.UserViewModel
+import com.example.userhub.ui.viewmodel.ViewModelFactory
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private val mainViewModel: UserViewModel by viewModels {
+        ViewModelFactory(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.rvUser.layoutManager = LinearLayoutManager(this)
+
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        getData()
+    }
+
+    private fun getData() {
+        val adapter = UserAdapter()
+        binding.rvUser.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
+        mainViewModel.user.observe(this, {
+            adapter.submitData(lifecycle, it)
+        })
+    }
+}

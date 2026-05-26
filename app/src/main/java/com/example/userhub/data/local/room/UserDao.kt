@@ -1,0 +1,20 @@
+package com.example.userhub.data.local.room
+
+import androidx.paging.PagingSource
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.example.userhub.data.remote.response.UserResponseItem
+
+@Dao
+interface UserDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUser(user: List<UserResponseItem>)
+
+    @Query("SELECT * FROM users")
+    fun getAllUser(): PagingSource<Int, UserResponseItem>
+
+    @Query("DELETE FROM users")
+    suspend fun deleteAll()
+}
