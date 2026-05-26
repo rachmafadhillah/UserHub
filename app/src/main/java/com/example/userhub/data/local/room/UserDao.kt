@@ -17,4 +17,7 @@ interface UserDao {
 
     @Query("DELETE FROM users")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM users WHERE name LIKE :query") // Sesuaikan nama tabel dan field-mu
+    fun searchUser(query: String): PagingSource<Int, UserResponseItem>
 }

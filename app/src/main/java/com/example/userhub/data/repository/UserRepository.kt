@@ -26,4 +26,22 @@ class UserRepository(private val userDatabase: UserDatabase, private val apiServ
             }
         ).liveData
     }
+
+    suspend fun addUser(
+        name: String,
+        address: String,
+        email: String,
+        phoneNumber: String,
+        city: String,
+        gender: Int
+    ): Result<UserResponseItem> {
+        return try {
+            // Mengirim data ke ApiService menggunakan format FormUrlEncoded (@Field)
+            val response = apiService.addUser(name, address, email, phoneNumber, city, gender)
+            Result.success(response)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 }

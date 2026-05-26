@@ -11,4 +11,15 @@ interface ApiService {
         @Query("page") page: Int,
         @Query("limit") limit: Int
     ): List<UserResponseItem>
+
+    @FormUrlEncoded
+    @POST("user")
+    suspend fun addUser(
+        @Field("name") name: String,
+        @Field("address") address: String,
+        @Field("email") email: String,
+        @Field("phoneNumber") phoneNumber: String,
+        @Field("city") city: String,
+        @Field("gender") gender: Int
+    ): UserResponseItem
 }

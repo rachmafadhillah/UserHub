@@ -13,7 +13,7 @@ import com.example.userhub.data.remote.retrofit.ApiService
 @OptIn(ExperimentalPagingApi::class)
 class UserRemoteMediator(
     private val database: UserDatabase,
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) : RemoteMediator<Int, UserResponseItem>() {
 
     private companion object {

@@ -1,5 +1,6 @@
 package com.example.userhub.ui.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -9,7 +10,7 @@ import com.example.userhub.databinding.ActivityMainBinding
 import com.example.userhub.ui.adapter.LoadingStateAdapter
 import com.example.userhub.ui.adapter.UserAdapter
 import com.example.userhub.ui.viewmodel.UserViewModel
-import com.example.userhub.ui.viewmodel.ViewModelFactory
+import com.example.userhub.ui.viewmodelfactory.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +27,12 @@ class MainActivity : AppCompatActivity() {
         binding.rvUser.layoutManager = LinearLayoutManager(this)
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
+        binding.fabAddUser.setOnClickListener {
+            val intent = Intent(this, AddUserActivity::class.java)
+            startActivity(intent)
+        }
+
         getData()
     }
 
