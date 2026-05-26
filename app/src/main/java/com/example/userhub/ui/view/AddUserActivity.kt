@@ -1,12 +1,10 @@
 package com.example.userhub.ui.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.userhub.R
 import com.example.userhub.databinding.ActivityAddUserBinding
 import com.example.userhub.ui.viewmodel.AddUserViewModel
 import com.example.userhub.ui.viewmodelfactory.ViewModelFactory

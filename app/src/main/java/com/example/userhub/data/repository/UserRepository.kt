@@ -7,7 +7,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.example.userhub.data.local.room.UserDatabase
-import com.example.userhub.data.pagging.UserPagingSource
 import com.example.userhub.data.pagging.UserRemoteMediator
 import com.example.userhub.data.remote.response.UserResponseItem
 import com.example.userhub.data.remote.retrofit.ApiService
@@ -21,7 +20,7 @@ class UserRepository(private val userDatabase: UserDatabase, private val apiServ
             ),
             remoteMediator = UserRemoteMediator(userDatabase, apiService),
             pagingSourceFactory = {
-//                QuotePagingSource(apiService)
+//                UserPagingSource(apiService)
                 userDatabase.userDao().getAllUser()
             }
         ).liveData
@@ -36,7 +35,6 @@ class UserRepository(private val userDatabase: UserDatabase, private val apiServ
         gender: Int
     ): Result<UserResponseItem> {
         return try {
-            // Mengirim data ke ApiService menggunakan format FormUrlEncoded (@Field)
             val response = apiService.addUser(name, address, email, phoneNumber, city, gender)
             Result.success(response)
         } catch (e: Exception) {

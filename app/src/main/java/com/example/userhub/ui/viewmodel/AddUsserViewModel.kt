@@ -22,7 +22,6 @@ class AddUserViewModel(private val userRepository: UserRepository) : ViewModel()
         gender: Int
     ) {
         viewModelScope.launch {
-            // 🛠️ Sebutkan nama parameternya agar Retrofit/Kotlin tidak bingung urutannya
             val result = userRepository.addUser(
                 name = name,
                 address = address,
