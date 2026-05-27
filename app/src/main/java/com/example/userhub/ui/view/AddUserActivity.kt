@@ -13,7 +13,6 @@ class AddUserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddUserBinding
 
-    // 🛠️ Inisialisasi AddUserViewModel menggunakan Factory
     private val addUserViewModel: AddUserViewModel by viewModels {
         ViewModelFactory(this)
     }
@@ -29,19 +28,17 @@ class AddUserActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-        // 🛠️ 1. Siapkan Observer untuk mendengarkan hasil dari ViewModel
         addUserViewModel.addResult.observe(this) { result ->
             showLoading(false)
 
             result.onSuccess { userItem ->
                 Toast.makeText(this, "User ${userItem.name} berhasil ditambahkan!", Toast.LENGTH_LONG).show()
-                finish() // Menutup halaman dan otomatis kembali ke MainActivity
+                finish()
             }.onFailure { exception ->
                 Toast.makeText(this, "Gagal menambahkan data: ${exception.message}", Toast.LENGTH_LONG).show()
             }
         }
 
-        // 🛠️ 2. Atur aksi ketika tombol Save diklik
         binding.btnSave.setOnClickListener {
             val name = binding.edUsername.text.toString().trim()
             val email = binding.edEmail.text.toString().trim()
@@ -50,7 +47,6 @@ class AddUserActivity : AppCompatActivity() {
             val address = binding.edAddress.text.toString().trim()
             val gender = if (binding.rbMale.isChecked) 0 else 1
 
-            // Validasi input kosong
             if (name.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || city.isEmpty() || address.isEmpty()) {
                 Toast.makeText(this, "Semua kolom wajib diisi!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -58,7 +54,6 @@ class AddUserActivity : AppCompatActivity() {
 
             showLoading(true)
 
-            // Panggil fungsi di ViewModel (Tidak perlu lifecycleScope.launch lagi di sini)
             addUserViewModel.addUser(name, address, email, phoneNumber, city, gender)
         }
     }

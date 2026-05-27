@@ -15,6 +15,10 @@ import com.example.userhub.ui.viewmodelfactory.ViewModelFactory
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    // 🛠️ TAMBAHKAN INI: Pindahkan deklarasi adapter ke level class
+    private val adapter = UserAdapter()
+
     private val mainViewModel: UserViewModel by viewModels {
         ViewModelFactory(this)
     }
@@ -37,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        val adapter = UserAdapter()
         binding.rvUser.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
                 adapter.retry()
